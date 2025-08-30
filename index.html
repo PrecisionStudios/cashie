@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cashie — Budget Planner</title>
+  <meta name="description" content="A fast, offline budget planner to track income, expenses, categories, and savings goals. No sign-up. Your data stays on your device." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 24 24'%3E%3Cpath fill='%2334c759' d='M3 7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4zm4-2h10a2 2 0 0 1 2 2v1H5V7a2 2 0 0 1 2-2m0 14h10a2 2 0 0 0 2-2V10H5v7a2 2 0 0 0 2 2'/%3E%3Ctext x='8' y='16' font-size='8' fill='white' font-family='monospace'%3E€%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="container header">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">💶</div>
+      <h1>Cashie <span class="muted">Budget Planner - By PrecisionStudios</span></h1>
+    </div>
+    <nav class="actions">
+      <label class="select">
+        <span>Currency</span>
+        <select id="currencySelect" aria-label="Choose currency">
+          <option value="€" selected>€ Euro</option>
+          <option value="$">$ USD</option>
+          <option value="£">£ GBP</option>
+          <option value="CHF">CHF</option>
+          <option value="RSD">RSD</option>
+        </select>
+      </label>
+      <label class="select">
+        <span>Month</span>
+        <input type="month" id="monthPicker" />
+      </label>
+      <button id="themeToggle" class="btn secondary" title="Toggle theme">☀️ / 🌙</button>
+      <button id="exportJsonBtn" class="btn">Export JSON</button>
+      <button id="exportCsvBtn" class="btn">Export CSV</button>
+      <label class="file">
+        <input type="file" id="importJsonInput" accept="application/json" />
+        <span class="btn secondary">Import JSON</span>
+      </label>
+    </nav>
+  </header>
+
+  <main class="container grid">
+    <section class="card stats">
+      <h2>Overview</h2>
+      <div class="stats-grid">
+        <div class="stat">
+          <div class="stat-label">Income</div>
+          <div id="incomeTotal" class="stat-value">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Expenses</div>
+          <div id="expenseTotal" class="stat-value">—</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">Balance</div>
+          <div id="balanceTotal" class="stat-value">—</div>
+        </div>
+      </div>
+      <canvas id="cashflowChart" width="900" height="200" aria-label="Cashflow chart"></canvas>
+    </section>
+
+    <section class="card">
+      <h2>Add Transaction</h2>
+      <form id="txForm" class="form grid-2">
+        <label>Type
+          <select id="txType" required>
+            <option value="income">Income</option>
+            <option value="expense" selected>Expense</option>
+          </select>
+        </label>
+        <label>Amount
+          <input id="txAmount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" required />
+        </label>
+        <label>Description
+          <input id="txDesc" type="text" placeholder="e.g., Groceries" />
+        </label>
+        <label>Date
+          <input id="txDate" type="date" required />
+        </label>
+        <label>Category
+          <select id="txCategory" required></select>
+        </label>
+        <label>Payment Method
+          <input id="txMethod" type="text" placeholder="Card / Cash / IBAN" />
+        </label>
+        <label class="checkbox">
+          <input id="txRecurring" type="checkbox" /> <span>Recurring</span>
+        </label>
+        <div class="form-actions">
+          <button class="btn" type="submit">Save</button>
+          <button class="btn secondary" type="reset">Reset</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="card">
+      <div class="row-between">
+        <h2>Transactions</h2>
+        <input id="txSearch" class="search" type="search" placeholder="Search..." />
+      </div>
+      <div class="table-wrap">
+        <table id="txTable" class="table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Type</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Method</th>
+              <th class="right">Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <div class="row-between">
+        <h2>Categories & Budgets</h2>
+        <button id="addCategoryBtn" class="btn">+ Add Category</button>
+      </div>
+      <div id="categoriesList" class="categories"></div>
+      <canvas id="pieChart" width="600" height="300" aria-label="Pie chart of expenses by category"></canvas>
+    </section>
+
+    <section class="card">
+      <div class="row-between">
+        <h2>Savings Goals</h2>
+        <button id="addGoalBtn" class="btn">+ Add Goal</button>
+      </div>
+      <div id="goalsList" class="goals"></div>
+    </section>
+
+    <section class="card danger">
+      <h2>Danger Zone</h2>
+      <div class="row-wrap gap">
+        <button id="seedDemoBtn" class="btn secondary">Seed Demo Data</button>
+        <button id="clearDataBtn" class="btn danger">Clear All Data</button>
+      </div>
+      <p class="muted">All data is stored locally in your browser (localStorage). Clearing will delete everything for this app.</p>
+    </section>
+  </main>
+
+  <footer class="container footer">
+    <p>Made with ❤️ by PrecisionStudios — Works offline. No accounts. <span id="footerYear"></span></p>
+  </footer>
+
+  <dialog id="categoryDialog">
+    <form method="dialog" class="dialog">
+      <h3>New Category</h3>
+      <label>Name <input id="catName" type="text" required /></label>
+      <label>Budget (per month) <input id="catBudget" type="number" step="0.01" min="0" placeholder="0.00" /></label>
+      <label>Color <input id="catColor" type="color" value="#34c759" /></label>
+      <menu>
+        <button value="cancel" class="btn secondary">Cancel</button>
+        <button id="catSaveBtn" value="default" class="btn">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <dialog id="goalDialog">
+    <form method="dialog" class="dialog">
+      <h3>New Goal</h3>
+      <label>Name <input id="goalName" type="text" required /></label>
+      <label>Target Amount <input id="goalTarget" type="number" step="0.01" min="0" required /></label>
+      <label>Saved So Far <input id="goalSaved" type="number" step="0.01" min="0" value="0" /></label>
+      <menu>
+        <button value="cancel" class="btn secondary">Cancel</button>
+        <button id="goalSaveBtn" value="default" class="btn">Save</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <template id="categoryTemplate">
+    <div class="category">
+      <div class="row-between">
+        <div class="row-wrap gap">
+          <div class="color-dot"></div>
+          <strong class="name"></strong>
+        </div>
+        <div class="row-wrap gap">
+          <span class="muted">Budget:&nbsp;</span><span class="budget"></span>
+        </div>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress"></div>
+        <div class="progress-text"></div>
+      </div>
+      <div class="row-end gap">
+        <button class="btn small secondary edit">Edit</button>
+        <button class="btn small danger delete">Delete</button>
+      </div>
+    </div>
+  </template>
+
+  <template id="goalTemplate">
+    <div class="goal">
+      <div class="row-between">
+        <strong class="name"></strong>
+        <span class="target muted"></span>
+      </div>
+      <div class="progress-wrap">
+        <div class="progress"></div>
+        <div class="progress-text"></div>
+      </div>
+      <div class="row-end gap">
+        <button class="btn small secondary add">+ Add</button>
+        <button class="btn small danger delete">Delete</button>
+      </div>
+    </div>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>
