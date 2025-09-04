@@ -1,126 +1,29 @@
 /* Cashie — Budget Planner
    Modern, responsive UI with zero dependencies.
    MIT License. */
-:root{
-  --bg: #0b0c0f;
-  --card: #12141a;
-  --muted: #a2a7b4;
-  --text: #f5f7fb;
-  --acc: #34c759;
-  --acc-2: #2ea44f;
-  --danger: #ff3b30;
-  --border: #1f2430;
-  --shadow: 0 10px 30px rgba(0,0,0,.25);
+:root { --bg:#0e0f12; --card:#151821; --txt:#e7e9ee; --muted:#a7afc0; --pri:#5272ff; }
+*{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.5 system-ui,Segoe UI,Roboto,Arial}
+.app-header,.app-footer{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between}
+.app-header h1{margin:0;font-size:20px}
+.header-right{display:flex;gap:12px;align-items:center}
+.github-stats{display:flex;gap:8px;align-items:center}
+.container{max-width:1100px;margin:40px auto;padding:0 20px;display:grid;gap:16px}
+.card{background:var(--card);border:1px solid #1f2330;border-radius:14px;padding:16px}
+.row{display:flex;flex-wrap:wrap;gap:12px}
+.row label{display:flex;flex-direction:column;gap:6px;min-width:140px}
+input,select,button{background:#0f1320;color:var(--txt);border:1px solid #22273a;border-radius:10px;padding:10px}
+button.primary{background:var(--pri);border:none;color:white}
+.kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kpi div{background:#0f1320;border:1px solid #22273a;border-radius:12px;padding:12px;text-align:center}
+.list-actions{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:10px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px dashed #2a3147}
+.lang-btn{padding:6px 10px}
+.profile-switch select{min-width:150px}
+@media (max-width:720px){
+  .kpi{grid-template-columns:1fr}
+  .app-header,.app-footer{padding:10px}
 }
-
-html[data-theme="light"]{
-  --bg:#f7f8fb;
-  --card:#ffffff;
-  --muted:#667085;
-  --text:#0b0c0f;
-  --border:#e6e8ee;
-  --shadow: 0 8px 24px rgba(0,0,0,.08);
-}
-
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font:14px/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, 'Helvetica Neue', Arial, 'Apple Color Emoji','Segoe UI Emoji';
-  color:var(--text);
-  background:radial-gradient(1200px 700px at 10% -10%, rgba(52,199,89,.12), transparent 50%), var(--bg);
-}
-
-.container{width:min(1100px, 92%); margin-inline:auto}
-.header{
-  display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between;
-  padding:20px 0; gap:10px;
-}
-.brand{display:flex; align-items:center; gap:10px}
-.logo{width:34px; height:34px; display:grid; place-items:center; background:linear-gradient(135deg, var(--acc), #6fe28e); border-radius:10px; box-shadow:var(--shadow); font-size:18px}
-.brand h1{margin:0; font-size:20px}
-.brand .muted{color:var(--muted); font-weight:600; font-size:14px}
-
-.actions{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-.select{display:flex; flex-direction:column; gap:3px; font-size:12px; color:var(--muted)}
-.select select, .select input[type="month"]{padding:10px 12px; border:1px solid var(--border); background:var(--card); color:var(--text); border-radius:10px}
-
-.btn{
-  display:inline-flex; align-items:center; justify-content:center; gap:8px;
-  padding:10px 14px; border-radius:10px; background:var(--acc); border:1px solid transparent; color:#fff; cursor:pointer; box-shadow:var(--shadow); transition:.2s;
-}
-.btn:hover{transform:translateY(-1px)}
-.btn.secondary{background:transparent; border:1px solid var(--border); color:var(--text)}
-.btn.danger{background:var(--danger)}
-.btn.small{padding:6px 10px; border-radius:8px; font-size:12px}
-
-.file{position:relative; overflow:hidden}
-.file input{position:absolute; inset:0; opacity:0; cursor:pointer}
-
-.grid{display:grid; gap:20px; grid-template-columns:1fr}
-@media (min-width: 980px){
-  .grid{grid-template-columns:1fr 1fr}
-}
-.card{
-  background:var(--card); border:1px solid var(--border); border-radius:16px; padding:18px; box-shadow:var(--shadow)
-}
-.card h2{margin-top:0}
-.card.danger{border:1px dashed var(--danger)}
-
-.stats-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-bottom:10px}
-.stat{background:linear-gradient(180deg, rgba(52,199,89,.15), transparent); border:1px solid var(--border); border-radius:14px; padding:14px}
-.stat-label{color:var(--muted); font-size:12px}
-.stat-value{font-size:24px; font-weight:700; margin-top:6px}
-
-.form{display:grid; gap:12px}
-.grid-2{grid-template-columns:1fr}
-@media (min-width: 700px){
-  .grid-2{grid-template-columns:repeat(2,1fr)}
-}
-.form input, .form select{
-  width:100%; padding:10px 12px; border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:10px
-}
-.form .checkbox{display:flex; align-items:center; gap:8px; margin-top:8px; color:var(--muted)}
-
-.form-actions{display:flex; gap:10px; align-items:center}
-
-.table-wrap{overflow:auto; border:1px solid var(--border); border-radius:12px}
-.table{width:100%; border-collapse:collapse; min-width:720px}
-.table th,.table td{padding:10px 12px; border-bottom:1px solid var(--border); text-align:left}
-.table th.right,.table td.right{text-align:right}
-.table tbody tr:hover{background:rgba(52,199,89,.08)}
-
-.row-between{display:flex; align-items:center; justify-content:space-between; gap:10px}
-.row-end{display:flex; align-items:center; justify-content:flex-end}
-.row-wrap{display:flex; align-items:center; flex-wrap:wrap}
-.gap{gap:10px}
-.search{padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--bg); color:var(--text)}
-
-.categories{display:grid; gap:12px}
-.category{border:1px solid var(--border); border-radius:12px; padding:12px; background:linear-gradient(180deg, rgba(255,255,255,.03), transparent)}
-.color-dot{width:14px; height:14px; border-radius:50%; background:#ccc; border:2px solid #0001}
-.progress-wrap{position:relative; height:12px; background:rgba(255,255,255,.06); border:1px solid var(--border); border-radius:999px; margin:12px 0}
-.progress{position:absolute; inset:0 0 0 0; transform-origin:left; height:100%; width:0%; background:linear-gradient(90deg, var(--acc), var(--acc-2)); border-radius:inherit}
-.progress-text{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff; text-shadow:0 1px 2px rgba(0,0,0,.6)}
-
-.goals{display:grid; gap:12px}
-.goal{border:1px solid var(--border); border-radius:12px; padding:12px}
-
-.footer{padding:40px 0; text-align:center; color:var(--muted)}
-
-.table .pill{
-  display:inline-flex; align-items:center; padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid var(--border)
-}
-.pill.income{background:rgba(52,199,89,.12)}
-.pill.expense{background:rgba(255,59,48,.12); border-color:rgba(255,59,48,.4)}
-
-.muted{color:var(--muted)}
-.table .actions .btn{box-shadow:none}
-.right{text-align:right}
-
-dialog{border:none; padding:0; background:transparent}
-.dialog{background:var(--card); border:1px solid var(--border); border-radius:12px; padding:16px; box-shadow:var(--shadow); width:min(420px, 92vw)}
-.dialog h3{margin-top:0}
-.dialog label{display:block; margin:10px 0}
-.dialog input{width:100%; padding:10px 12px; border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:10px}
-.dialog menu{display:flex; gap:10px; justify-content:flex-end; margin-top:12px}
+.changelog-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.view-all{color:var(--pri);text-decoration:none;font-weight:700}
+.view-all:hover{text-decoration:underline}

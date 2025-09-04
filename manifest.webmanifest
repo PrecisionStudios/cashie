@@ -1,0 +1,9 @@
+{
+  "name": "Cashie",
+  "short_name": "Cashie",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#0e0f12",
+  "theme_color": "#5272ff",
+  "icons": []
+}
