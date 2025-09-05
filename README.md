@@ -3,7 +3,7 @@
 **Cashie (Beta)** is the first lightweight release of our open-source budget planner.  
 It’s a simple, offline-ready web app built with plain **HTML, CSS, and JavaScript**, designed to help users quickly track their income, expenses, and balance.
 
-![screenshot](screenshot.png)
+![http://cashie.precisionstudios.me/assets/screenshot-hero.png](http://cashie.precisionstudios.me/assets/screenshot-hero.png)
 
 ## 🔑 Key Features (Beta)
 - Add, edit, delete transactions (income & expenses)
