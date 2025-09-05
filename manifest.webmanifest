@@ -3,7 +3,7 @@
   "short_name": "Cashie",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#0e0f12",
-  "theme_color": "#5272ff",
+  "background_color": "#030404",
+  "theme_color": "#76ff03",
   "icons": []
 }

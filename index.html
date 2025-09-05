@@ -4,12 +4,13 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cashie — Offline Budget Planner</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="theme-color" content="#76ff03" />
   <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header class="app-header">
-    <h1>Cashie (Beta)</h1>
+    <h1 class="logo">Cashie <span class="beta">BETA</span></h1>
     <div class="header-right">
       <div class="github-stats">
         <a id="ghLink" href="https://github.com/PrecisionStudios/cashie" target="_blank" rel="noopener">GitHub</a>
@@ -20,8 +21,8 @@
         <button data-lang="sr" class="lang-btn">SR</button>
       </div>
       <div class="profile-switch">
-        <select id="profileSelect"></select>
-        <button id="addProfileBtn" aria-label="Add profile">＋</button>
+        <select id="profileSelect" title="Profile"></select>
+        <button id="addProfileBtn" aria-label="Add profile" class="icon-btn">＋</button>
       </div>
     </div>
   </header>
@@ -63,7 +64,7 @@
         <button id="addBtn" class="primary" data-i18n="add">Add</button>
         <button id="exportBtn" data-i18n="export">Export</button>
         <button id="importBtn" data-i18n="import">Import</button>
-        <select id="csvDelimiter">
+        <select id="csvDelimiter" title="CSV delimiter">
           <option value="," selected>,</option>
           <option value=";">;</option>
           <option value="|">|</option>
@@ -77,45 +78,53 @@
 
     <section class="summary card">
       <div class="kpi">
-        <div><span data-i18n="income">Income</span><strong id="sumIncome">0</strong></div>
-        <div><span data-i18n="expense">Expense</span><strong id="sumExpense">0</strong></div>
-        <div><span data-i18n="balance">Balance</span><strong id="sumBalance">0</strong></div>
+        <div class="kpi-item inc">
+          <span class="kpi-label" data-i18n="income">Income</span><strong id="sumIncome">0</strong>
+        </div>
+        <div class="kpi-item exp">
+          <span class="kpi-label" data-i18n="expense">Expense</span><strong id="sumExpense">0</strong>
+        </div>
+        <div class="kpi-item bal">
+          <span class="kpi-label" data-i18n="balance">Balance</span><strong id="sumBalance">0</strong>
+        </div>
       </div>
     </section>
 
     <section class="list card">
       <div class="list-actions">
         <input id="search" placeholder="Search..." />
-        <select id="monthFilter"></select>
+        <select id="monthFilter" title="Filter by month"></select>
       </div>
-      <table id="txTable" aria-label="Transactions">
-        <thead>
-          <tr>
-            <th data-i18n="date">Date</th>
-            <th data-i18n="type">Type</th>
-            <th data-i18n="category">Category</th>
-            <th data-i18n="amount">Amount</th>
-            <th data-i18n="note">Note</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="table-wrap">
+        <table id="txTable" aria-label="Transactions">
+          <thead>
+            <tr>
+              <th data-i18n="date">Date</th>
+              <th data-i18n="type">Type</th>
+              <th data-i18n="category">Category</th>
+              <th data-i18n="amount">Amount</th>
+              <th data-i18n="note">Note</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
     </section>
 
     <section class="changelog card">
-    <div class="changelog-title">
-      <h2 data-i18n="changelog">Changelog</h2>
-      <a id="ghReleaseLink" class="view-all" href="https://github.com/PrecisionStudios/cashie/releases" target="_blank" rel="noopener">
-        View all on GitHub →
-      </a>
-    </div>
-    <ul id="changelogList" class="changelog-list"></ul>
+      <div class="changelog-title">
+        <h2 data-i18n="changelog">Changelog</h2>
+        <a id="ghReleaseLink" class="view-all" href="https://github.com/PrecisionStudios/cashie/releases" target="_blank" rel="noopener">
+          View all on GitHub →
+        </a>
+      </div>
+      <ul id="changelogList" class="changelog-list"></ul>
     </section>
   </main>
 
   <footer class="app-footer">
-    <small>MIT © PrecisionStudios 2025 — <span id="dataVersion"></span></small>
+    <small>MIT © PrecisionStudios — <span id="dataVersion"></span></small>
   </footer>
 
   <script src="app.js"></script>
